@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    api(libs.jackson.module.kotlin)
     testImplementation(kotlin("test"))
 }
 

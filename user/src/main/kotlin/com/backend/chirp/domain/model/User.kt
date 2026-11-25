@@ -1,4 +1,4 @@
-package com.backend.user.domain.model
+package com.backend.chirp.domain.model
 
 import java.util.UUID
 

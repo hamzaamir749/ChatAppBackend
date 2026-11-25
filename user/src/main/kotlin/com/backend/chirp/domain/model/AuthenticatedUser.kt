@@ -1,4 +1,4 @@
-package com.backend.user.domain.model
+package com.backend.chirp.domain.model
 
 data class AuthenticatedUser(
     val user: User,
