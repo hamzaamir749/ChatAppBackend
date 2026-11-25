@@ -1,6 +1,9 @@
 package com.backend.chirp.api.exception_handling
 
+import com.backend.chirp.domain.exception.InvalidCredentialsException
+import com.backend.chirp.domain.exception.InvalidTokenException
 import com.backend.chirp.domain.exception.UserAlreadyExistsException
+import com.backend.chirp.domain.exception.UserNotFoundException
 import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,7 +19,28 @@ class AuthExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     fun onUserAlreadyExists(
         e: UserAlreadyExistsException
-    ) = mapOf("code" to "User Exists", "message" to e.message)
+    ) = mapOf("code" to "USER_EXISTS", "message" to e.message)
+
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun onUserNotFound(
+        e: UserNotFoundException
+    ) = mapOf("code" to "USER_NOT_FOUND", "message" to e.message)
+
+    @ExceptionHandler(InvalidCredentialsException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun onInvalidCredentials(
+        e: InvalidCredentialsException
+    ) = mapOf("code" to "INVALID_CREDENTIALS", "message" to e.message)
+
+
+    @ExceptionHandler(InvalidTokenException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun onInvalidToken(
+        e: InvalidTokenException
+    ) = mapOf("code" to "INVALID_TOKEN", "message" to e.message)
+
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun onValidationException(e: MethodArgumentNotValidException): ResponseEntity<Map<String, Any>> {
